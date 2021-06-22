@@ -1,16 +1,14 @@
 <template>
-  <!-- navbar -->
-  <Navbar />
-  <!-- /navbar -->
+  <AppLayout />
 </template>
 
 <script>
-import { Navbar } from "@/components/Layout";
+import AppLayout from "@/layouts/AppLayout";
 
 export default {
   name: "App",
   components: {
-    Navbar,
+    AppLayout,
   },
 };
 </script>
