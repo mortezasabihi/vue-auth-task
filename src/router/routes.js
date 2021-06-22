@@ -37,4 +37,14 @@ export default [
       layout: "AppAuthLayout",
     },
   },
+  {
+    path: "/auth/change-password",
+    name: "AuthChangePassword",
+    component: () => require("@/views/Auth/ChangePassword.vue").default,
+    // component: () =>
+    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
+    meta: {
+      layout: "AppAuthLayout",
+    },
+  },
 ];
