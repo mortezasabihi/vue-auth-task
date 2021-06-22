@@ -24,14 +24,13 @@
 <script>
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import { MOBILE } from "@/regexes";
 import { FormInput } from "@/components/Ui";
 
 const schema = yup
   .string()
-  .matches(
-    /09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/,
-    "شماره موبایل وارد شده معتبر نیست."
-  );
+  .matches(MOBILE, "شماره موبایل وارد شده معتبر نیست.")
+  .required("شماره موبایل اجباری است.");
 
 export default {
   name: "UserCheckForm",

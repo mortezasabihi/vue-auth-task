@@ -47,4 +47,14 @@ export default [
       layout: "AppAuthLayout",
     },
   },
+  {
+    path: "/auth/login",
+    name: "AuthLogin",
+    component: () => require("@/views/Auth/Login.vue").default,
+    // component: () =>
+    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
+    meta: {
+      layout: "AppAuthLayout",
+    },
+  },
 ];
