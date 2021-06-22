@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <h2 class="card-title">شماره موبایل خود را وارد کنید.</h2>
+  <h2 class="card-title">شماره موبایل خود را وارد کنید.</h2>
 
-    <!-- form -->
-    <form @submit="onSubmit">
-      <FormInput
-        v-model="value"
-        label="شماره موبایل"
-        placeholder="شماره موبایل خود را وارد کنید"
-        :error="errorMessage"
-      />
+  <!-- form -->
+  <form @submit="onSubmit">
+    <FormInput
+      v-model="value"
+      label="شماره موبایل"
+      placeholder="شماره موبایل خود را وارد کنید"
+      :error="errorMessage"
+    />
 
-      <button
-        type="submit"
-        :disabled="!meta.dirty || !meta.valid"
-        class="btn btn-block btn-primary"
-      >
-        تایید شماره همراه
-      </button>
-    </form>
-    <!-- /form -->
-  </div>
+    <button
+      type="submit"
+      :disabled="!meta.dirty || !meta.valid"
+      class="btn btn-block btn-primary"
+    >
+      تایید شماره همراه
+    </button>
+  </form>
+  <!-- /form -->
 </template>
 
 <script>
@@ -36,7 +34,7 @@ const schema = yup
   );
 
 export default {
-  name: "CheckUser",
+  name: "UserCheckForm",
   components: {
     FormInput,
   },

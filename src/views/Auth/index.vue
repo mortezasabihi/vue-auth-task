@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <CheckUser />
-  </div>
+  <UserCheckForm />
 </template>
 
 <script>
-import { CheckUser } from "@/components/Auth";
+import { UserCheckForm } from "@/components/Auth";
 
 export default {
   name: "AuthPage",
   components: {
-    CheckUser,
+    UserCheckForm,
   },
 };
 </script>
