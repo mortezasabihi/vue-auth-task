@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
+    fontFamily: {
+      body: ["Vazir", "sans-serif"],
+    },
   },
   variants: {
     extend: {},
@@ -10,5 +13,6 @@ module.exports = {
   plugins: [require("daisyui")],
   daisyui: {
     themes: false,
+    rtl: true,
   },
 };
