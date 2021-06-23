@@ -26,8 +26,8 @@ import { ref, computed } from "vue";
 
 export default {
   name: "RequestNewVerificationCode",
-  setup() {
-    const timerInitialValue = 120;
+  setup(_, { emit }) {
+    const timerInitialValue = 20;
     const timer = ref(timerInitialValue);
 
     let interval = setInterval(() => setTimer(), 1000);
@@ -36,6 +36,7 @@ export default {
       timer.value === 0 ? clearInterval(interval) : timer.value--;
     };
     const getNewCode = () => {
+      emit("click");
       clearInterval(interval);
       timer.value = timerInitialValue;
       interval = setInterval(() => setTimer(), 1000);

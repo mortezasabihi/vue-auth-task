@@ -23,16 +23,21 @@
       :disabled="!meta.dirty || !meta.valid"
       class="btn btn-block btn-primary"
     >
-      ثبت نام
+      {{ loading ? "..." : "ثبت نام" }}
     </button>
   </form>
   <!-- /form -->
 </template>
 
 <script>
+import { computed, watch } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
 import { FormInput } from "@/components/Ui";
+import { LOADING } from "@/store/state";
+import { ADD_PASSWORD } from "@/store/actions";
 
 const schema = yup.object().shape({
   password: yup
@@ -50,16 +55,26 @@ export default {
     FormInput,
   },
   setup() {
+    const store = useStore();
+    const router = useRouter();
     const { meta, handleSubmit, errors } = useForm({
       validationSchema: schema,
     });
     const { value: password } = useField("password");
     const { value: rePassword } = useField("re_password");
 
-    const onSubmit = handleSubmit(() => {
-      console.log(password);
-      console.log(rePassword);
-    });
+    const onSubmit = handleSubmit((values) =>
+      store.dispatch(ADD_PASSWORD, values)
+    );
+
+    watch(
+      () => store.state[LOADING],
+      (value) =>
+        !value &&
+        router.push({
+          name: "Home",
+        })
+    );
 
     return {
       meta,
@@ -67,6 +82,7 @@ export default {
       password,
       rePassword,
       errors,
+      loading: computed(() => store.state[LOADING]),
     };
   },
 };

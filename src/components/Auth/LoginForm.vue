@@ -4,12 +4,6 @@
   <!-- form -->
   <form @submit="onSubmit">
     <FormInput
-      v-model="phone"
-      label="شماره موبایل"
-      placeholder="شماره موبایل خود را وارد کنید"
-      :error="errors.phone"
-    />
-    <FormInput
       v-model="password"
       label="رمز عبور"
       placeholder="رمز عبور خود را وارد کنید"
@@ -17,24 +11,33 @@
       type="password"
     />
 
+    <router-link
+      class="mb-3 block underline text-sm text-purple-500"
+      :to="{ name: 'AuthResetPassword', query: { phone } }"
+      >فراموشی رمز عبور</router-link
+    >
+
     <button
       type="submit"
       :disabled="!meta.dirty || !meta.valid"
       class="btn btn-block btn-primary"
     >
-      تایید
+      {{ loading ? "..." : "تایید" }}
     </button>
   </form>
   <!-- /form -->
 </template>
 
 <script>
-import { watch } from "vue";
-import { useRoute } from "vue-router";
+import { watch, computed } from "vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
 import { MOBILE } from "@/regexes";
 import { FormInput } from "@/components/Ui";
+import { LOADING, TOKEN } from "@/store/state";
+import { LOGIN } from "@/store/actions";
 
 const schema = yup.object().shape({
   phone: yup
@@ -53,7 +56,9 @@ export default {
     FormInput,
   },
   setup() {
+    const store = useStore();
     const route = useRoute();
+    const router = useRouter();
     const { meta, handleSubmit, errors, setFieldValue } = useForm({
       validationSchema: schema,
     });
@@ -64,7 +69,6 @@ export default {
     watch(
       () => route.query.phone,
       (value) => {
-        console.log(value);
         setFieldValue("phone", value);
       },
       {
@@ -72,10 +76,16 @@ export default {
       }
     );
 
-    const onSubmit = handleSubmit(() => {
-      console.log(phone);
-      console.log(password);
-    });
+    watch(
+      () => store.state[TOKEN],
+      (value) =>
+        value &&
+        router.push({
+          name: "Home",
+        })
+    );
+
+    const onSubmit = handleSubmit((values) => store.dispatch(LOGIN, values));
 
     return {
       meta,
@@ -83,6 +93,7 @@ export default {
       password,
       phone,
       errors,
+      loading: computed(() => store.state[LOADING]),
     };
   },
 };

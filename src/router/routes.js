@@ -1,3 +1,6 @@
+import store from "@/store";
+import { TOKEN } from "@/store/state";
+
 export default [
   {
     path: "/",
@@ -11,50 +14,55 @@ export default [
     path: "/auth",
     name: "Auth",
     component: require("@/views/Auth/index.vue").default,
-    // component: () =>
-    //   import(/* webpackChunkName: "Auth" */ "@/views/Auth/index.vue").default,
     meta: {
       layout: "AppAuthLayout",
+    },
+    beforeEnter: () => {
+      if (store.state[TOKEN]) return false;
     },
   },
   {
     path: "/auth/verify",
     name: "AuthVerify",
     component: () => require("@/views/Auth/Verify.vue").default,
-    // component: () =>
-    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
     meta: {
       layout: "AppAuthLayout",
+    },
+    beforeEnter: (to, from) => {
+      if (from.name !== "Auth") return false;
     },
   },
   {
     path: "/auth/information",
     name: "AuthInformation",
     component: () => require("@/views/Auth/Information.vue").default,
-    // component: () =>
-    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
     meta: {
       layout: "AppAuthLayout",
     },
-  },
-  {
-    path: "/auth/change-password",
-    name: "AuthChangePassword",
-    component: () => require("@/views/Auth/ChangePassword.vue").default,
-    // component: () =>
-    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
-    meta: {
-      layout: "AppAuthLayout",
+    beforeEnter: (to, from) => {
+      if (from.name !== "AuthVerify") return false;
     },
   },
   {
     path: "/auth/login",
     name: "AuthLogin",
     component: () => require("@/views/Auth/Login.vue").default,
-    // component: () =>
-    //   import(/* webpackChunkName: "AuthVerify" */ "@/views/Auth/Verify.vue"),
     meta: {
       layout: "AppAuthLayout",
+    },
+    beforeEnter: (to, from) => {
+      if (from.name !== "Auth") return false;
+    },
+  },
+  {
+    path: "/auth/reset-password",
+    name: "AuthResetPassword",
+    component: () => require("@/views/Auth/ResetPassword.vue").default,
+    meta: {
+      layout: "AppAuthLayout",
+    },
+    beforeEnter: (to, from) => {
+      if (from.name !== "AuthLogin") return false;
     },
   },
 ];
